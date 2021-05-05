@@ -12,6 +12,43 @@ class PermissionsTableSeeder extends Seeder
      */
     public function run()
     {
+        $permissions_Array = [
+            'Purchases' => [
+                'control_purchase_orders',
+                'control_purchase_delivery_notes',
+                'control_purchase_invoices',
+                'control_suppliers'
+            ],
+            'Sales' => [
+                'control_sales'
+            ],
+            'Clients' => [
+                'control_clients'
+            ],
+            'Invoices' => [
+                'control_invoices',
+                'archieve_invoices'
+            ],
+            'Catalog' => [
+                'control_products',
+                'control_services',
+                'control_expenses',
+                'control_investments',
+                'control_client_assets',
+            ],
+            'Users' => [
+                'add_users',
+                'edit_users',
+                'delete_users',
+                'give_some_permissions',
+                'give_all_permissions',
+                'control_users'
+            ],
+            'Notifications' => [
+                'read_notifications'
+            ],
+            'Reports' => []
+        ];
         $permissions = [
 
             'الفواتير',
@@ -61,7 +98,14 @@ class PermissionsTableSeeder extends Seeder
 
         ];
 
-
+        foreach ($permissions_Array as $domain => $arr) {
+            foreach ($arr as $value) {
+                Permission::create([
+                    'domain' => $domain,
+                    'name'  => $value
+                ]);
+            }
+        }
 
         foreach ($permissions as $permission) {
 

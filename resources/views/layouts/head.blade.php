@@ -1,5 +1,5 @@
 <!-- Title -->
-<title> Valex -  Premium dashboard ui bootstrap rwd admin html5 template </title>
+<title>Icandra </title>
 <!-- Favicon -->
 <link rel="icon" href="{{URL::asset('assets/img/brand/favicon.png')}}" type="image/x-icon"/>
 <!-- Icons css -->
@@ -17,9 +17,16 @@
 <link href="{{URL::asset('assets/css-rtl/style-dark.css')}}" rel="stylesheet">
 <!---Skinmodes css-->
 <link href="{{URL::asset('assets/css-rtl/skin-modes.css')}}" rel="stylesheet">
-
 <style>
     html{
         font-family: 'Cairo';
+    }
+    input::-webkit-outer-spin-button,
+     input::-webkit-inner-spin-button {
+     -webkit-appearance: none;
+    margin: 0;
+    }
+    .login-side-panner{
+        background-image: url({{url('public/assets/img/backgrounds/bg.jpg')}})
     }
 </style>

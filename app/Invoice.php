@@ -8,28 +8,24 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Invoice extends Model
 {
     use SoftDeletes;
-    protected $fillable = [
-        'invoice_number',
-        'invoice_Date',
-        'Due_date',
-        'product',
-        'section_id',
-        'Amount_collection',
-        'Amount_Commission',
-        'Discount',
-        'Value_VAT',
-        'Rate_VAT',
-        'Total',
-        'Status',
-        'Value_Status',
-        'note',
-        'Payment_Date',
-    ];
-
     protected $dates = ['deleted_at'];
+    protected $guarded = [];
 
-    public function section()
+
+    public function client()
     {
-        return $this->belongsTo(Section::class);
+        return $this->belongsTo(Client::class);
+    }
+    public function admin()
+    {
+        return $this->belongsTo(User::class, 'agent', 'id');
+    }
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withPivot('quantity');
+    }
+    public function services()
+    {
+        return $this->belongsToMany(Service::class)->withPivot('quantity');
     }
 }

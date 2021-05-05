@@ -12,14 +12,16 @@ class NewInvoiceAdded extends Notification
 {
     use Queueable;
     private $invoice;
+    private $type;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($invoice)
+    public function __construct($invoice, $type)
     {
         $this->invoice = $invoice;
+        $this->type = $type;
     }
 
     /**
@@ -53,7 +55,7 @@ class NewInvoiceAdded extends Notification
 
             'data' => 'new invoice added',
             'id' => $this->invoice->id,
-            'title' => 'تم اضافة فاتورة جديد بواسطة :',
+            'title' => "تم اضافة" . $this->type . "جديد بواسطة :",
             'user' => Auth::user()->name,
 
         ];

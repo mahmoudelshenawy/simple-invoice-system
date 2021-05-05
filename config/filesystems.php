@@ -58,6 +58,10 @@ return [
             'driver' => 'local',
             'root'   => public_path() . '/Attachments',
         ],
+        'products_uploads' => [
+            'driver' => 'local',
+            'root'   => public_path() . '/Attachments' . '/Products',
+        ],
 
         's3' => [
             'driver' => 's3',

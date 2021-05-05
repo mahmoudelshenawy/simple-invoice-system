@@ -19,14 +19,16 @@ class AdminsUsersTableSeeder extends Seeder
             'email' => 'super_admin@gmail.com',
             'password' => bcrypt('123456'),
             'roles_name' => ["owner"],
-            'Status' => 'مفعل',
+            'Status' => 'active',
         ]);
 
-        $role = Role::create(['name' => 'owner']);
 
-        $permissions = Permission::pluck('id', 'id')->all();
+        // $role = Role::create(['name' => 'owner']);
 
-        $role->syncPermissions($permissions);
+        // $permissions = Permission::pluck('id', 'id')->all();
+
+        // $role->syncPermissions($permissions);
+        $role = Role::find(1);
 
         $user->assignRole([$role->id]);
     }

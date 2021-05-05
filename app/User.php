@@ -38,4 +38,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'roles_name' => 'array'
     ];
+
+    public function profile()
+    {
+        return $this->hasOne(Profile::class);
+    }
 }

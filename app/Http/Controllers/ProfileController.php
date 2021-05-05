@@ -3,70 +3,64 @@
 namespace App\Http\Controllers;
 
 use App\Profile;
+use App\User;
 use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+
+    public function getProfileOfUser($userId)
+    {
+        $profile = Profile::where('user_id', $userId)->first();
+        if (empty($profile)) {
+            return redirect("/profile/$userId/create");
+        }
+        return view('profile.index', compact('profile'));
+    }
+    public function createProfile($userId)
+    {
+        $user = User::findOrFail($userId);
+        return view('profile.create', compact('user'));
+    }
     public function index()
     {
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function create()
     {
         //
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
-        //
-    }
+        $attrs = $request->only(['address', 'language', 'phone_1', 'phone_2', 'tin']);
+        $attrs['name'] = $request->first_name . $request->last_name;
+        $attrs['user_id'] = auth()->user()->id;
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  \App\Profile  $profile
-     * @return \Illuminate\Http\Response
-     */
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            $file_name = $image->getClientOriginalName();
+            $user = auth()->user();
+            $attrs['image'] = $file_name;
+            // save the image
+            $imageName = $request->image->getClientOriginalName();
+            $request->image->move(public_path('Images/' . $user->name), $imageName);
+        }
+        Profile::create($attrs);
+        session()->flash('Add', 'تم انشاء الصفحة الشخصية');
+        return back();
+    }
     public function show(Profile $profile)
     {
-        //
+        // return view('profile.index', compact('profile'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Profile  $profile
-     * @return \Illuminate\Http\Response
-     */
     public function edit(Profile $profile)
     {
         //
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Profile  $profile
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request, Profile $profile)
     {
         //
