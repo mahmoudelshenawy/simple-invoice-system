@@ -65,8 +65,8 @@
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
-                    @can('اضافة فاتورة')
-                        <a href="invoices/create" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
+                    @can('control_users')
+                        <a href="users/create" class="modal-effect btn btn-sm btn-primary" style="color:white"><i
                                 class="fas fa-plus"></i>&nbsp; اضافة مستخدم</a>
                     @endcan
                 </div>
@@ -93,9 +93,16 @@
                                     @endphp
                                     <tr>
                                         <td>{{ $i }}</td>
-                                        <td>{{ $user->number }} </td>
+                                        <td>{{ $user->name }} </td>
                                         <td>{{ $user->email }}</td>
-                                        <td>{{ $user->status }}</td>
+
+                                        <td>
+                                            @if ($user->status == 'active')
+                                            <span class="label text-success d-flex"><div class="dot-label bg-success ml-1"></div>Active</span>
+                                            @else
+                                            <span class="label text-success d-flex"><div class="dot-label bg-danger ml-1"></div>Inactive</span>
+                                            @endif
+                                        </td>
                                         <td>
                                             @if (!empty($user->getRoleNames()))
                                                 @foreach ($user->getRoleNames() as $v)
@@ -110,8 +117,8 @@
                                             <a href="/users/{{$user->id}}/edit" class="btn btn-sm btn-info">
                                                 <i class="las la-pen"></i>
                                             </a>
-                                            <a  href="#deleteserviceModal" class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
-                                            data-id="{{ $user->id }}" data-user_name="{{ $user->name }}"
+                                            <a  href="#delete_user" class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
+                                            data-user_id="{{ $user->id }}" data-user_name="{{ $user->name }}"
                                             data-toggle="modal"title="حذف"><i
                                                 class="las la-trash"></i></a>
                                         </td>
@@ -128,7 +135,7 @@
     </div>
 
     <!-- حذف الفاتورة -->
-    <div class="modal fade" id="delete_invoice" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="delete_user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -137,14 +144,14 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
-                    <form action="{{ route('invoices.destroy', 'test') }}" method="post">
+                    <form action="{{ route('users.destroy', 'test') }}" method="post">
                         {{ method_field('delete') }}
                         {{ csrf_field() }}
                 </div>
                 <div class="modal-body">
                     هل انت متاكد من عملية الحذف ؟
-                    <input type="hidden" name="invoice_id" id="invoice_id" value="">
-                    <input type="hidden" name="id_page" id="id_page" value="delete">
+                    <input type="hidden" name="user_id" id="user_id" value="">
+                 <input type="text" name="user_name" id="user_name" readonly class="form-control">
 
                 </div>
                 <div class="modal-footer">
@@ -195,11 +202,13 @@
             zIndex:1000000
            })
 
-        $('#delete_invoice').on('show.bs.modal', function(event) {
+        $('#delete_user').on('show.bs.modal', function(event) {
             var button = $(event.relatedTarget)
-            var invoice_id = button.data('invoice_id')
+            var user_id = button.data('user_id')
+            var user_name = button.data('user_name')
             var modal = $(this)
-            modal.find('.modal-body #invoice_id').val(invoice_id);
+            modal.find('.modal-body #user_id').val(user_id);
+            modal.find('.modal-body #user_name').val(user_name);
         })
 
     </script>

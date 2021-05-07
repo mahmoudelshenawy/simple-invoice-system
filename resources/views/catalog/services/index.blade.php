@@ -49,7 +49,7 @@
 							<div class="card-header pb-0">
 								<!--Add Btn-->
 								<div class="d-flex justify-content-between">
-									@can('اضافة فاتورة')
+									@can('control_services')
 									<a href="services/create" class="btn btn-sm btn-primary" style="color:white"><i
 									class="fas fa-plus"></i>&nbsp; اضافة خدمة</a>
 							     	@endcan

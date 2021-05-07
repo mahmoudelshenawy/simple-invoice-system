@@ -23,7 +23,11 @@
             <div class="d-flex">
                 <h4 class="content-title mb-0 my-auto"> <a href="/sales" class="content-title">قائمة المبيعات</a>
                 </h4>
-                <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ إضافة بيع جديد</span>
+                <span class="text-muted mt-1 tx-13 mr-2 mb-0">
+                    <a href="/choose_items_of_sale/{{$sale->id}}">
+                        / إضافة منتجات و خدمات جديده
+                    </a>
+                    </span>
                 <span class="text-muted mt-1 tx-13 mr-2 mb-0">/ استكمال بيانات البيع</span>
             </div>
         </div>
@@ -94,7 +98,7 @@
                                                     $total = 0;
                                                     $discount = 0;
                                                 @endphp
-                                                @foreach ($sale->products as $product)
+                                                @forelse ($sale->products as $product)
                                                 <tr>
                                                     <th scope="row">{{$product->name}}</th>
                                                     <td>{{$product->discount}}</td>
@@ -116,12 +120,42 @@
 														<i class="las la-pen"></i>
 													</a>
                                                    </td>
-                                                      
-                                                   
+                                                 
                                                 </tr>
-                                                @endforeach
+                                                   @empty
+                                                 
+                                                 @endforelse
+
+                                                @forelse ($sale->services as $service)
+                                                <tr>
+                                                    <th scope="row">{{$service->name}}</th>
+                                                    <td>{{$service->discount}}</td>
+                                                    <td>{{$service->sales_price}}</td>
+                                                    <td>{{$service->pivot->quantity}}</td>
+                                                    <td>
+                                                        @if ($service->discount == 0)
+                                                        @php  $subtotal += $service->sales_price * $service->pivot->quantity @endphp
+                                                        {{$service->sales_price * $service->pivot->quantity}}
+                                                        @else
+                                                        {{($service->sales_price * $service->pivot->quantity) - ($service->sales_price * $service->pivot->quantity) * ($service->discount/100)}}
+        
+                                                        @php  $subtotal += ($service->sales_price * $service->pivot->quantity) - ($service->sales_price * $service->pivot->quantity) * ($service->discount/100) @endphp
+                                                        @endif
+                                                       
+                                                    </td>
+                                                   <td>
+													<a href="/choose_items_of_sale/{{$sale->id}}" class="btn btn-sm btn-info">
+														<i class="las la-pen"></i>
+													</a>
+                                                   </td>
+                                                </tr>
+                                                @empty
+                                              
+                                               
+                                                @endforelse
+
                                             </tbody>
-                                        </table>    
+                                        </table>      
                                   </div>
                                   <div class="total">
                                     <br>
@@ -193,9 +227,11 @@
         
                                     <div class="col">
                                         <label for="inputName" class="control-label">العملة</label>
-                                        <select name="currency" id="currency" class="form-control @error('currency') is-invalid @enderror">
+                                        <select name="currency" id="currency" class="form-control @error('currency') is-invalid @enderror select2">
                                             <option value="unspecified">حدد العملة</option>
-                                            <option value="USD $ - US Dollar">USD $ - US Dollar</option>
+                                            @foreach (currencies() as $key=>$val)
+                                            <option value="{{$key}}-{{$val}}" selected>{{$key}}-{{$val}}</option>
+                                            @endforeach
                                         </select>
                                             @error('currency')
                                             <span class="text-danger" role="alert">

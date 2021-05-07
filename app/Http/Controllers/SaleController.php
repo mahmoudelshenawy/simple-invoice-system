@@ -40,10 +40,23 @@ class SaleController extends Controller
     {
         $sale = Sale::findOrFail($id);
         $proIds = $request->product_id;
-        $qtys = $request->quantity;
+        $servIds = $request->service_id;
+
+        $proQtys = $request->quantity;
+        $servQtys = $request->quantity_service;
+
         $sale->products()->detach();
-        foreach ($proIds as $index => $proId) {
-            $sale->products()->attach($proId, ['quantity' => $qtys[$index]]);
+        $sale->services()->detach();
+
+        if (!empty($proIds)) {
+            foreach ($proIds as $index => $proId) {
+                $sale->products()->attach($proId, ['quantity' => $proQtys[$index]]);
+            }
+        }
+        if (!empty($servIds)) {
+            foreach ($servIds as $index => $servId) {
+                $sale->services()->attach($servId, ['quantity' => $servQtys[$index]]);
+            }
         }
         session()->flash('complete_data');
         return redirect('sales_data/' . $sale->id);
@@ -51,7 +64,7 @@ class SaleController extends Controller
     public function completeSalesData($id)
     {
         $sale = Sale::findOrFail($id);
-        $admins = User::role('owner')->get();
+        $admins = User::role('Administrator')->get();
 
         session()->flash('complete_data');
         return view('sales.complete_sales_data', compact('sale', 'admins'));

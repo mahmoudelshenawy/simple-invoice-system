@@ -24,13 +24,12 @@ class CreatePurchaseOrdersTable extends Migration
             $table->date('delivery_date')->nullable();
             $table->date('valid_until')->nullable();
             $table->date('email_sent_date')->nullable();
-            $table->string('currency')->default('USD');
+            $table->text('currency')->default('USD');
             $table->enum('type', ['purhcase_order', 'delivery_note'])->nullable();
             $table->enum('payment_option', ['unspecified', 'bank_transfer', 'direct_debit', 'check', 'cash'])->default('unspecified');
             $table->enum('bank_account', ['credit_bank', 'standard'])->default('credit_bank');
 
-            $table->enum('status_purchase_order', ['Awaiting', 'Refused', 'In Progress', 'Received'])->default('Received');
-            $table->enum('status_delivery_note', ['Pending Invoive', 'In Progress', 'Closed', 'Invoiced'])->default('Pending Invoive');
+            $table->enum('status', ['Pending Invoive', 'Awaiting', 'Refused', 'In Progress', 'Received', 'Closed', 'Invoiced'])->default('In Progress');
             $table->unsignedBigInteger('agent')->nullable();
             $table->string('created_by')->nullable();
             $table->foreign('agent')->references('id')->on('users')->onDelete('cascade');

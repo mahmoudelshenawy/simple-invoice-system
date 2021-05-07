@@ -7,7 +7,7 @@
   <!--Internal   Notify -->
   <link href="{{ URL::asset('assets/plugins/notify/css/notifIt.css') }}" rel="stylesheet" />
 @section('title')
-اضافة مستخدم - مورا سوفت للادارة القانونية
+تعديل بيانات مستخدم - مورا سوفت للادارة القانونية
 @stop
 
 
@@ -19,7 +19,7 @@
         <div class="d-flex">
             <h4 class="content-title mb-0 my-auto">
              <a href="/users">المستخدمين</a>   
-            </h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ اضافة
+            </h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ تعديل بيانات
                 مستخدم</span>
         </div>
     </div>
@@ -41,7 +41,7 @@ window.onload = function() {
 <script>
 window.onload = function() {
     notif({
-        msg: "تم اضافة المستخدم بنجاح",
+        msg: "تم تعديل بيانات المستخدم بنجاح",
         type: "success"
     })
 }
@@ -60,15 +60,16 @@ window.onload = function() {
                     </div>
                 </div><br>
                 <form class="parsley-style-1" id="selectForm2" autocomplete="off" name="selectForm2"
-                    action="{{route('users.store')}}" method="post">
-                    {{csrf_field()}}
+                    action="{{route('users.update', $user->id)}}" method="post">
+                    @csrf
+                    @method('PUT')
                     <div class="">
 
                         <div class="row mg-b-20">
                             <div class="parsley-input col-md-6" id="fnWrapper">
                                 <label>اسم المستخدم: <span class="tx-danger">*</span></label>
                                 <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="name" required="" type="text">
+                                    data-parsley-class-handler="#lnWrapper" name="name" value="{{$user->name}}" type="text">
                                     @error('name')
                                 <span class="text-danger" role="alert">
                                    <strong>{{ $message }}</strong>
@@ -79,7 +80,7 @@ window.onload = function() {
                             <div class="parsley-input col-md-6 mg-t-20 mg-md-t-0" id="lnWrapper">
                                 <label>البريد الالكتروني: <span class="tx-danger">*</span></label>
                                 <input class="form-control form-control-sm mg-b-20"
-                                    data-parsley-class-handler="#lnWrapper" name="email" required="" type="email">
+                                    data-parsley-class-handler="#lnWrapper" name="email" value="{{$user->email}}" type="email">
                                     @error('email')
                             <span class="text-danger" role="alert">
                                    <strong>{{ $message }}</strong>
@@ -118,12 +119,12 @@ window.onload = function() {
                         <div class="col-lg-6">
                             <label class="form-label">حالة المستخدم</label>
                             <select name="status" id="select-beast" class="form-control nice-select custom-select">
-                               <option value="active">Active</option>
-                               <option value="inactive">Inactive</option>
+                               <option value="active" {{$user->status == 'active' ? 'selected' : ''}}>Active</option>
+                               <option value="inactive" {{$user->status == 'inactive' ? 'selected' : ''}}>Inactive</option>
                             </select>
                         </div>
                         <div class="col-lg-3 d-flex align-items-center">
-                            <label class="ckbox mt-2"><input type="checkbox" name="super_admin" id="super_admin_check"><span>Set as Administrator</span></label>
+                            <label class="ckbox mt-2"><input type="checkbox" name="super_admin" @role('Administrator') checked @else  @endrole id="super_admin_check"><span>Set as Administrator</span></label>
                         </div> 
                     </div>
 
@@ -178,6 +179,14 @@ window.onload = function() {
 <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
 
 <script>
+
+    if($('#super_admin_check').is(':checked')){
+            $('#roles').attr('disabled', true)
+        }else{
+            $('#roles').removeAttr('disabled')
+        }
+
+
     $('#super_admin_check').on('change' , function(e){
         if($('#super_admin_check').is(':checked')){
             $('#roles').attr('disabled', true)

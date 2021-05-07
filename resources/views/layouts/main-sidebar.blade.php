@@ -96,7 +96,7 @@
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="{{ url("/catalog/products") }}">المنتجات</a></li>
 							<li><a class="slide-item" href="{{ url('/catalog/services') }}">الخدمات</a></li>
-							<li><a class="slide-item" href="{{ url('/catalog/expenses&investment') }}">النفقات و الإستثمارات</a></li>
+							<li><a class="slide-item" href="{{ url('/catalog/expenses_investment') }}">النفقات و الإستثمارات</a></li>
 							<li><a class="slide-item" href="{{ url('/' . $page='products') }}">ممتلكات العملاء</a></li>
 						</ul>
 					</li>

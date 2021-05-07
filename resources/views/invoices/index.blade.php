@@ -69,11 +69,11 @@
 							<div class="card-header pb-0">
 								<!--Add Btn-->
 								<div class="d-flex justify-content-start">
-									@can('اضافة فاتورة')
+									@can('control_invoices')
 									<a href="#selectClient" class="modal-effect btn btn-sm btn-primary" data-effect="effect-scale" data-toggle="modal" style="color:white"><i
 									class="fas fa-plus"></i>&nbsp; اضافة فاتورة جديد</a>
 							     	@endcan
-									 @can('تصدير EXCEL')
+									 @can('control_invoices')
 									 <a class="modal-effect btn btn-sm btn-primary mr-4" href="{{ url('export_invoices') }}"
 										 style="color:white"><i class="fas fa-file-download"></i>&nbsp;تصدير اكسيل</a>
 								 @endcan
@@ -151,13 +151,13 @@
 																class="btn ripple btn-primary" data-toggle="dropdown"
 																type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
 																<div class="dropdown-menu tx-13">
-																	@can('تعديل الفاتورة')
+																	@can('control_invoices')
 																		<a class="dropdown-item"
 																			href="/invoice_data/{{$invoice->id}}">تعديل
 																			الفاتورة</a>
 																	@endcan
 				
-																	@can('حذف الفاتورة')
+																	@can('control_invoices')
 																		<a class="dropdown-item modal-effect" href="#" data-invoice_id="{{ $invoice->id }}"
 																			data-effect="effect-scale"
 																			data-id="{{ $invoice->id }}" data-invoice_name="{{ $invoice->title }}"
@@ -166,7 +166,7 @@
 																			الفاتورة</a>
 																	@endcan
 				
-																	@can('تغير حالة الدفع')
+																	@can('control_invoices')
 																		<a class="modal-effect dropdown-item"
 																			href="#changeInvoiceStatus" data-toggle="modal"   data-effect="effect-scale">
 																			<i class="text-success fas fa-money-bill"></i>&nbsp;&nbsp;
@@ -176,14 +176,14 @@
 																		</a>
 																	@endcan
 				
-																	@can('ارشفة الفاتورة')
+																	@can('archieve_invoices')
 																		<a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
 																			data-toggle="modal" data-target="#Transfer_invoice"><i
 																				class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي
 																			الارشيف</a>
 																	@endcan
 				
-																	@can('طباعةالفاتورة')
+																	@can('control_invoices')
 																		<a class="dropdown-item" href="print_invoice/{{ $invoice->id }}"><i
 																				class="text-success fas fa-print"></i>&nbsp;&nbsp;طباعة
 																			الفاتورة

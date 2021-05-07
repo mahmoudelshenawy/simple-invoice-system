@@ -141,7 +141,7 @@
                                     <div class="tab-pane" id="tab7">
                                           <!--المرفقات-->
                                           <div class="card card-statistics">
-                                            @can('اضافة مرفق')
+                                            @can('control_expenses','control_investments')
                                                 <div class="card-body">
                                                     <p class="text-danger">* صيغة المرفق pdf, jpeg ,.jpg , png </p>
                                                     <h5 class="card-title">اضافة مرفقات</h5> 
@@ -197,7 +197,7 @@
                                                                             class="fas fa-download"></i>&nbsp;
                                                                         تحميل</a>
 
-                                                                    @can('حذف المرفق')
+                                                                    @can('control_expenses','control_investments')
                                                                         <button class="btn btn-outline-danger btn-sm"
                                                                             data-toggle="modal"
                                                                             data-file_name="{{ $attachment->file_name }}"

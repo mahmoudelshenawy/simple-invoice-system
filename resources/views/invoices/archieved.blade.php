@@ -114,7 +114,7 @@
 																type="button">العمليات<i class="fas fa-caret-down ml-1"></i></button>
 																<div class="dropdown-menu tx-13">
 																	
-																	@can('حذف الفاتورة')
+																	@can('control_invoices')
 																		<a class="dropdown-item modal-effect" href="#" 
 																			data-effect="effect-scale"
 																			data-id="{{ $invoice->id }}" data-invoice_name="{{ $invoice->title }}"
@@ -122,7 +122,7 @@
 																				class="text-danger fas fa-trash-alt"></i>&nbsp;&nbsp;حذف
 																			الفاتورة</a>
 																	@endcan
-																	@can('ارشفة الفاتورة')
+																	@can('control_invoices')
 																		<a class="dropdown-item" href="#" data-invoice_id="{{ $invoice->id }}"
 																			data-toggle="modal" data-target="#Restore_invoice"><i
 																				class="text-warning fas fa-exchange-alt"></i>&nbsp;&nbsp;نقل الي

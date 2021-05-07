@@ -51,9 +51,9 @@ class RolesPermissionsTableSeeder extends Seeder
         $permissions = Permission::pluck('id', 'id')->all();
         $main_role->syncPermissions($permissions);
         foreach ($domains as $value) {
-            $permissions = Permission::where('domain', $value)->pluck('id');
+            $permission = Permission::where('domain', $value)->pluck('id');
             $role = Role::create(['name' => $value . 'Admin']);
-            $role->syncPermissions($permissions);
+            $role->syncPermissions($permission);
         }
     }
 }

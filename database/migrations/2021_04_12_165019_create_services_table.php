@@ -22,7 +22,7 @@ class CreateServicesTable extends Migration
             $table->text('description')->nullable();
             $table->float('purchase_price')->default(0.00);
             $table->float('discount')->default(0.00);
-            $table->enum('tax', ['5%', '10%', '20%'])->default('20%');
+            $table->enum('tax', ['5%', '10%', '20%'])->nullable();
             $table->float('min_price')->default(0.00);
             $table->timestamps();
         });

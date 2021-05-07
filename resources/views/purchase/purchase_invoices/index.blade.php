@@ -59,7 +59,7 @@
 							<div class="card-header pb-0">
 								<!--Add Btn-->
 								<div class="d-flex justify-content-between">
-									@can('اضافة فاتورة')
+									@can('control_purchase_invoices')
 									<a href="#selectSupplier" class="modal-effect btn btn-sm btn-primary" data-effect="effect-scale" data-toggle="modal" style="color:white"><i
 									class="fas fa-plus"></i>&nbsp; اضافة شراء جديد</a>
 							     	@endcan

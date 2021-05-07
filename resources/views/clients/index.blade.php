@@ -28,10 +28,13 @@
 						<div class="card">
 							<div class="card-header pb-0">
 								<!--Add Btn-->
-								<div class="d-flex justify-content-between">
-									@can('اضافة فاتورة')
+								<div class="d-flex justify-content-sart">
+									@can('control_clients')
 									<a href="clients/create" class="btn btn-sm btn-primary" style="color:white"><i
 									class="fas fa-plus"></i>&nbsp; اضافة عميل</a>
+							     	@endcan
+									@can('control_clients')
+									<a href="clients/list" class="btn btn-sm btn-primary mr-2" style="color:white"><i class="fas fa-th-large"></i></i>&nbsp; عميل عرض قايمة العملاء</a>
 							     	@endcan
 								</div>
 								

@@ -46,7 +46,9 @@ Route::group(['middleware' => ['auth']], function () {
     Route::resource('profile', 'ProfileController');
 
     // clients
+    Route::get('clients/list', 'ClientController@viewClientsList');
     Route::resource('clients', 'ClientController');
+
     // Products details&attachments
     Route::resource('catalog/products', 'ProductController');
     Route::post('attachment/{type}', 'ProductController@addNewAttachment');

@@ -12,7 +12,7 @@ class CategorySeeder extends Seeder
      */
     public function run()
     {
-        Category::create(
+        $data = [
             [
                 'name' => 'Electronics',
                 'type' => 'products'
@@ -33,6 +33,7 @@ class CategorySeeder extends Seeder
                 'name' => 'renting bill',
                 'type' => 'expenses'
             ],
-        );
+        ];
+        Category::create($data);
     }
 }

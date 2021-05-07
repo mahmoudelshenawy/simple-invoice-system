@@ -129,19 +129,19 @@
            
                                        <div class="col">
                                            <label>رقم الهاتف 1</label>
-                                           <input type="text" class="form-control form-control-lg" id="email" name="email"
+                                           <input type="text" class="form-control form-control-lg" id="phone_1" name="phone_1"
                                                value="">
-                                               @error('email')
+                                               @error('phone_1')
                                                <span class="text-danger" role="alert">
                                                    <strong>{{ $message }}</strong>
                                                </span>
                                            @enderror
                                        </div>
                                        <div class="col">
-                                           <label for="Rate_VAT" class="control-label">رقم الهاتف 2</label>
-                                           <input type="text" class="form-control form-control-lg" id="website" name="website"
+                                           <label  class="control-label">رقم الهاتف 2</label>
+                                           <input type="text" class="form-control form-control-lg" id="phone_2" name="phone_2"
                                            value="">
-                                           @error('website')
+                                           @error('phone_2')
                                            <span class="text-danger" role="alert">
                                                <strong>{{ $message }}</strong>
                                            </span>
@@ -164,19 +164,19 @@
            
                                        <div class="col">
                                            <label>البريب الالكتروني</label>
-                                           <input type="text" class="form-control form-control-lg" id="comments" name="comments"
+                                           <input type="email" class="form-control form-control-lg" id="email" name="email"
                                                value="">
-                                               @error('comments')
+                                               @error('email')
                                                <span class="text-danger" role="alert">
                                                    <strong>{{ $message }}</strong>
                                                </span>
                                            @enderror
                                        </div>
                                        <div class="col">
-                                           <label for="Rate_VAT" class="control-label">الموقع الالكتروني</label>
-                                           <input type="text" class="form-control form-control-lg" id="popup_notice" name="popup_notice"
+                                           <label  class="control-label">الموقع الالكتروني</label>
+                                           <input type="text" class="form-control form-control-lg" id="website" name="website"
                                            value="">
-                                           @error('popup_notice')
+                                           @error('website')
                                            <span class="text-danger" role="alert">
                                                <strong>{{ $message }}</strong>
                                            </span>
@@ -199,23 +199,19 @@
            
                                        <div class="col">
                                            <label>التعليقات</label>
-                                           <input type="text" class="form-control form-control-lg" id="phone_1" name="phone_1"
+                                           <input type="text" class="form-control form-control-lg" id="phone_1" name="comments"
                                                value="">
-                                               @error('phone_2')
+                                               @error('comments')
                                                <span class="text-danger" role="alert">
                                                    <strong>{{ $message }}</strong>
                                                </span>
                                            @enderror
                                        </div>
                                        <div class="col">
-                                           <label for="Rate_VAT" class="control-label">ملاحظات اضافية</label>
-                                           <input type="text" class="form-control form-control-lg" id="phone_2" name="phone_2"
+                                           <label  class="control-label">ملاحظات اضافية</label>
+                                           <input type="text" class="form-control form-control-lg" id="" name=""
                                            value="">
-                                           @error('phone_2')
-                                           <span class="text-danger" role="alert">
-                                               <strong>{{ $message }}</strong>
-                                           </span>
-                                       @enderror
+                                      
                                        </div>
            
                                    </div> 
@@ -321,9 +317,11 @@
                                    <div class="row">
                                     <div class="col">
                                         <label for="inputName" class="control-label">العملة</label>
-                                        <select name="currency" id="currency" class="form-control @error('currency') is-invalid @enderror">
+                                        <select name="currency" id="currency" class="form-control @error('currency') is-invalid @enderror select2">
                                             <option value="unspecified">حدد العملة</option>
-                                            <option value="USD $ - US Dollar">USD $ - US Dollar</option>
+                                            @foreach (currencies() as $key=>$val)
+                                            <option value="{{$key}}-{{$val}}" selected>{{$key}}-{{$val}}</option>
+                                            @endforeach
                                         </select>
                                             @error('currency')
                                             <span class="text-danger" role="alert">

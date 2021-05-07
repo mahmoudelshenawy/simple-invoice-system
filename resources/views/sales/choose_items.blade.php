@@ -60,89 +60,79 @@
                         {{-- 1 --}}
                         <div class="row">
                            <div class="col-md-8 mx-auto">
-                               <div class="row">
-                                   {{-- @if (count($sale->products) == 0) --}}
-                                   @foreach ($products as $pro)
-                                   <div class="col-lg-4 col-md-3 col-12 col-sm-12 my-3">
-                                    <div class="card" style="min-height: 300px;">
-                                        <img class="card-img-top" src="{{URL::asset($pro->imagePath)}}" alt="Card image cap" height="237">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between">
-                                                <p class="card-text">{{$pro->name}}</p>
-                                                <div class="custom-checkbox custom-control">
-                                                    <input type="checkbox" data-checkboxes="mygroup" data-id = "{{$pro->id}}" class="custom-control-input" id="product_{{$pro->id}}" name="product_id[]" value="{{$pro->id}}" @if ($sale->products->contains($pro)) checked @endif>
-                                                    <label for="product_{{$pro->id}}" class="custom-control-label mt-1"></label>
-                                                </div>
-                                            </div>
-                                            <div class="my-2">
-                                               
-                                                @if ($sale->products->contains($pro))
-                                               @php
-                                                   $pro_sale = $sale->products->find($pro)
-                                               @endphp
-                                                <input type="number" name="quantity[]" id="quantity_{{$pro->id}}" class="form-control form-control-sm" value="{{$pro_sale->pivot->quantity}}">
-                                                @else
-                                                <input type="number" name="quantity[]" id="quantity_{{$pro->id}}" class="form-control form-control-sm" value="1" disabled hidden>
-                                              @endif
-                                               
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                   @endforeach
-                                  {{-- @else 
-                                  @foreach ($sale->products as $pro)
-                                   <div class="col-lg-4 col-md-3 col-12 col-sm-12 my-3">
-                                    <div class="card" style="min-height: 300px;">
-                                        <img class="card-img-top" src="{{URL::asset($pro->imagePath)}}" alt="Card image cap" height="237">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between">
-                                                <p class="card-text">{{$pro->name}}</p>
-                                                <div class="custom-checkbox custom-control">
-                                                    <input type="checkbox" data-checkboxes="mygroup" data-id = "{{$pro->id}}" class="custom-control-input" id="product_{{$pro->id}}" name="product_id[]" value="{{$pro->id}}">
-                                                    <label for="product_{{$pro->id}}" class="custom-control-label mt-1"></label>
-                                                </div>
-                                            </div>
-                                            <div class="my-2">
-                                                <input type="number" name="quantity[]" id="quantity_{{$pro->id}}" class="form-control form-control-sm" value="{{$pro->pivot->quantity}}">
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endforeach --}}
-                                   {{-- @endif --}}
-
-                                   {{-- Services --}}
-                                   @foreach ($services as $serv)
-                                   <div class="col-lg-4 col-md-3 col-12 col-sm-12 my-3">
-                                    <div class="card" style="min-height: 300px;">
-                                        <img class="card-img-top" src="{{URL::asset($serv->imagePath)}}" alt="Card image cap" height="237">
-                                        <div class="card-body">
-                                            <div class="d-flex justify-content-between">
-                                                <p class="card-text">{{$serv->name}}</p>
-                                                <div class="custom-checkbox custom-control">
-                                                    <input type="checkbox" data-checkboxes="mygroup" data-id = "{{$serv->id}}" class="custom-control-input" id="service_{{$serv->id}}" name="service_id[]" value="{{$serv->id}}" @if ($sale->services->contains($serv)) checked @endif>
-                                                    <label for="service_{{$serv->id}}" class="custom-control-label mt-1"></label>
-                                                </div>
-                                            </div>
-                                            <div class="my-2">
-                                               
-                                                @if ($sale->services->contains($serv))
-                                               @php
-                                                   $serv_sale = $sale->services->find($serv)
-                                               @endphp
-                                                <input type="number" name="quantity[]" id="quantity_{{$serv->id}}" class="form-control form-control-sm" value="{{$serv_sale->pivot->quantity}}">
-                                                @else
-                                                <input type="number" name="quantity[]" id="quantity_{{$serv->id}}" class="form-control form-control-sm" value="1" disabled hidden>
-                                              @endif
-                                               
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                   @endforeach
-                                   {{-- end services --}}
-                        </div>
+                            <div class="text center">
+                                <h4>Products</h4>
+                            </div>
+                            <div class="row">
+                                @forelse ($products as $pro)
+                                <div class="col-lg-4 col-md-3 col-12 col-sm-12 my-3">
+                                 <div class="card" style="min-height: 300px;">
+                                     <img class="card-img-top" src="{{URL::asset($pro->imagePath)}}" alt="Card image cap" height="237">
+                                     <div class="card-body">
+                                         <div class="d-flex justify-content-between">
+                                             <p class="card-text">{{$pro->name}}</p>
+                                             <div class="custom-checkbox custom-control">
+                                                 <input type="checkbox" data-checkboxes="mygroup" data-id = "{{$pro->id}}" class="custom-control-input" id="product_{{$pro->id}}" name="product_id[]" value="{{$pro->id}}" @if ($sale->products->contains($pro)) checked @endif>
+                                                 <label for="product_{{$pro->id}}" class="custom-control-label mt-1"></label>
+                                             </div>
+                                         </div>
+                                         <div class="my-2">
+                                            
+                                             @if ($sale->products->contains($pro))
+                                            @php
+                                                $pro_sale = $sale->products->find($pro)
+                                            @endphp
+                                             <input type="number" name="quantity[]" id="quantity_{{$pro->id}}" class="form-control form-control-sm" value="{{$pro_sale->pivot->quantity}}">
+                                             @else
+                                             <input type="number" name="quantity[]" id="quantity_{{$pro->id}}" class="form-control form-control-sm" value="1" disabled hidden>
+                                           @endif
+                                            
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             @empty
+                             <a href="/products/create">Create New products</a>
+                                @endforelse
+                            </div>   
+                               <hr>
+                               <div class="text center">
+                                 <h4>Services</h4>
+                                 </div>
+                                 <div class="row">
+                                {{-- Services --}}
+                                @forelse ($services as $serv)
+                                <div class="col-lg-4 col-md-3 col-12 col-sm-12 my-3">
+                                 <div class="card" style="min-height: 300px;">
+                                     <img class="card-img-top" src="{{URL::asset($serv->imagePath)}}" alt="Card image cap" height="237">
+                                     <div class="card-body">
+                                         <div class="d-flex justify-content-between">
+                                             <p class="card-text">{{$serv->name}}</p>
+                                             <div class="custom-checkbox custom-control">
+                                                 <input type="checkbox" data-checkboxes="mygroup" data-id = "{{$serv->id}}" class="custom-control-input" id="service_{{$serv->id}}" name="service_id[]" value="{{$serv->id}}" @if ($sale->services->contains($serv)) checked @endif>
+                                                 <label for="service_{{$serv->id}}" class="custom-control-label mt-1"></label>
+                                             </div>
+                                         </div>
+                                         <div class="my-2">
+                                            
+                                             @if ($sale->services->contains($serv))
+                                            @php
+                                                $serv_sale = $sale->services->find($serv)
+                                            @endphp
+                                             <input type="number" name="quantity_service[]" id="quantity_serve_{{$serv->id}}" class="form-control form-control-sm" value="{{$serv_sale->pivot->quantity}}">
+                                             @else
+                                             <input type="number" name="quantity_service[]" id="quantity_serve_{{$serv->id}}" class="form-control form-control-sm" value="1" disabled hidden>
+                                           @endif
+                                            
+                                         </div>
+                                     </div>
+                                 </div>
+                             </div>
+                             @empty
+                             <a href="/services/create">Create New Service</a>
+                                @endforelse
+                                {{-- end services --}}
+                         </div>      
                            </div>
                         </div> 
                         <div class="d-flex justify-content-center my-3">
@@ -206,7 +196,7 @@
                 console.log(id)
                 if(typeof parseInt(id) == 'number'){
                 $.ajax({
-                        url: `/invoices/products/${id}`,
+                        url: `/sales/products/${id}`,
                         type: "GET",
                         dataType: "json",
                         success: function(data) {
@@ -224,17 +214,21 @@
         })
 
         $("input[type=checkbox]").on('change', function(e){
-            var  proId = e.target.value;
-           if($('#product_' + proId).is(":checked")){
-               $(`#quantity_${proId}`).removeAttr('disabled')
-               $(`#quantity_${proId}`).removeAttr('hidden')
-            //    $(`input[name=quantity_${proId}]`).removeAttr('disabled')
-            //    $(`input[name=quantity_${proId}]`).removeAttr('hidden')
+            var  id = e.target.value;
+           if($('#product_' + id).is(":checked")){
+               $(`#quantity_${id}`).removeAttr('disabled')
+               $(`#quantity_${id}`).removeAttr('hidden')
            }else{
-            $(`#quantity_${proId}`).attr('disabled',true)
-             $(`#quantity_${proId}`).attr('hidden', true)
-            // $(`input[name=quantity_${proId}]`).attr('disabled',true)
-            // $(`input[name=quantity_${proId}]`).attr('hidden',true)
+            $(`#quantity_${id}`).attr('disabled',true)
+             $(`#quantity_${id}`).attr('hidden', true)
+           }
+       
+           if($('#service_' + id).is(":checked")){
+               $(`#quantity_serve_${id}`).removeAttr('disabled')
+               $(`#quantity_serve_${id}`).removeAttr('hidden')
+           }else{
+            $(`#quantity_serve_${id}`).attr('disabled',true)
+             $(`#quantity_serve_${id}`).attr('hidden', true)
            }
         })
     </script>

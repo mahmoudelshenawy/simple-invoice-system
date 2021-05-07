@@ -118,7 +118,7 @@
                                      <br>
                                    {{-- 2 --}}
                                    @php
-                                       $categories = \App\Category::where('type','product')->get();
+                                       $categories = \App\Category::where('type','products')->get();
                                    @endphp
                                    <div class="row">
                                        <div class="col">

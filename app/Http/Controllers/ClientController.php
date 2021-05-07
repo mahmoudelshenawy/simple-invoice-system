@@ -15,10 +15,30 @@ class ClientController extends Controller
         $clients = Client::all();
         return view('clients.index', compact('clients'));
     }
+    public function viewClientsList()
+    {
+        $clients = Client::with('sales', 'invoices')->orderBy('legal_name', 'asc')->get();
+
+        $groups = $clients->reduce(function ($carry, $client) {
+
+            // get first letter
+            $first_letter = $client['legal_name'][0];
+
+            if (!isset($carry[$first_letter])) {
+                $carry[$first_letter] = [];
+            }
+
+            $carry[$first_letter][] = $client;
+
+            return $carry;
+        }, []);
+        $clients = Client::all();
+        return view('clients.clients_list', compact('groups'));
+    }
 
     public function create()
     {
-        $admins = User::role('owner')->get();
+        $admins = User::role('Administrator')->get();
         $clients = Client::all();
         return view('clients.create', compact('admins', 'clients'));
     }

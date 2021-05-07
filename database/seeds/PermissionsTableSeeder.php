@@ -47,7 +47,10 @@ class PermissionsTableSeeder extends Seeder
             'Notifications' => [
                 'read_notifications'
             ],
-            'Reports' => []
+            'Reports' => [],
+            'Settings' => [
+                'control_settings'
+            ]
         ];
         $permissions = [
 
@@ -107,9 +110,9 @@ class PermissionsTableSeeder extends Seeder
             }
         }
 
-        foreach ($permissions as $permission) {
+        // foreach ($permissions as $permission) {
 
-            Permission::create(['name' => $permission]);
-        }
+        //     Permission::create(['name' => $permission]);
+        // }
     }
 }

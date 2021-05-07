@@ -70,7 +70,7 @@
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-header pb-0">
-                    @can('اضافة قسم')
+                    @can('control_purchase_orders')
                         <a data-target="#addSectionModal" data-toggle="modal" href="#!" data-effect="effect-scale"  class="modal-effect btn btn-sm btn-primary" style="color:white"><i
                                 class="fas fa-plus"></i>&nbsp; اضافة قسم</a>
                     @endcan
@@ -101,7 +101,7 @@
                                         <td>{{ $cat->type }}</td>
                                         <td>{{ $cat->parent->name ?? '--Primary--' }}</td>
                                         <td>
-                                            @can('تعديل قسم')
+                                            @can('control_purchase_orders')
                                             <a href="#editCategoryModal" class="modal-effect btn btn-sm btn-info" data-effect="effect-scale"
                                                 data-id="{{ $cat->id }}" data-name="{{ $cat->name }}"
                                                 data-description="{{ $cat->description }}" data-type="{{$cat->type}}" data-parent_id="{{$cat->parent_id}}"
@@ -109,7 +109,7 @@
                                                  title="تعديل"><i class="las la-pen"></i></a>
                                         @endcan
 
-                                        @can('حذف قسم')
+                                        @can('control_purchase_orders')
                                             <a  href="#deleteSectionModal" class="modal-effect btn btn-sm btn-danger" data-effect="effect-scale"
                                                 data-id="{{ $cat->id }}" data-name="{{ $cat->name }}"
                                                 data-toggle="modal"title="حذف"><i
