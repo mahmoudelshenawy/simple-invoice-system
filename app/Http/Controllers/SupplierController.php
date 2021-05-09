@@ -17,7 +17,7 @@ class SupplierController extends Controller
     }
     public function create()
     {
-        $admins = User::role('owner')->get();
+        $admins = User::role('Administrator')->get();
         return view('purchase.suppliers.create', compact('admins'));
     }
 
@@ -38,7 +38,7 @@ class SupplierController extends Controller
 
     public function edit(Supplier $supplier)
     {
-        $admins = User::role('owner')->get();
+        $admins = User::role('Administrator')->get();
         return view('purchase.suppliers.edit', compact('supplier', 'admins'));
     }
 
@@ -59,5 +59,26 @@ class SupplierController extends Controller
         $supplier->delete();
         session()->flash('Delete');
         return back();
+    }
+
+    public function getSuppliersList()
+    {
+        $suppliers = Supplier::with('purchase_invoices', 'purchase_orders')->orderBy('legal_name', 'asc')->get();
+
+        $groups = $suppliers->reduce(function ($carry, $supplier) {
+
+            // get first letter
+            $first_letter = $supplier['legal_name'][0];
+
+            if (!isset($carry[$first_letter])) {
+                $carry[$first_letter] = [];
+            }
+
+            $carry[$first_letter][] = $supplier;
+
+            return $carry;
+        }, []);
+        $suppliers = Supplier::all();
+        return view('purchase.suppliers.suppliers_list', compact('groups'));
     }
 }

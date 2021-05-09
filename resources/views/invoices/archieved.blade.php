@@ -103,8 +103,9 @@
 													@endif
 												</td>
 												<td>
-													
-													{{$invoice->created_at->toDateString()}}
+													{{$invoice->created_at->format('m/d/Y')}}
+													<br>
+													{{$invoice->created_at->format('h:i:s A')}}
 												</td>
 												<td>
 														<div class="dropdown">

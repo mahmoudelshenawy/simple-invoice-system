@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Exports\InvoicesExport;
 use App\Invoice;
 use App\User;
 use Illuminate\Http\Request;
@@ -16,6 +17,7 @@ use App\Notifications\NewInvoiceAddedEmail;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
 
 class InvoiceController extends Controller
 {
@@ -27,7 +29,27 @@ class InvoiceController extends Controller
         $archieved = false;
         return view('invoices.index', compact('invoices', 'archieved', 'clients'));
     }
-
+    public function getPaidInvoices()
+    {
+        $invoices = Invoice::where('status', 'Paid')->get();
+        $clients = Client::all(['name', 'legal_name', 'id']);
+        $archieved = false;
+        return view('invoices.index', compact('invoices', 'archieved', 'clients'));
+    }
+    public function getUnPaidInvoices()
+    {
+        $invoices = Invoice::where('status', 'UnPaid')->get();
+        $clients = Client::all(['name', 'legal_name', 'id']);
+        $archieved = false;
+        return view('invoices.index', compact('invoices', 'archieved', 'clients'));
+    }
+    public function getPartialPaidInvoices()
+    {
+        $invoices = Invoice::where('status', 'Partially_Paid')->get();
+        $clients = Client::all(['name', 'legal_name', 'id']);
+        $archieved = false;
+        return view('invoices.index', compact('invoices', 'archieved', 'clients'));
+    }
 
     public function store(Request $request)
     {
@@ -80,7 +102,7 @@ class InvoiceController extends Controller
     public function completeInvoiceData($id)
     {
         $invoice = Invoice::findOrFail($id);
-        $admins = User::role('owner')->get();
+        $admins = User::role('Administrator')->get();
 
         session()->flash('complete_data');
         return view('invoices.complete_invoice_data', compact('invoice', 'admins'));
@@ -99,7 +121,7 @@ class InvoiceController extends Controller
 
         $invoice->update($attrs);
         $user = auth()->user();
-        Notification::send($user, new NewInvoiceAdded($invoice));
+        Notification::send($user, new NewInvoiceAdded($invoice, 'فاتورة'));
         session()->flash('Update', 'تم تحديث البيانات بنجاح');
         return redirect('/invoices');
     }
@@ -171,6 +193,36 @@ class InvoiceController extends Controller
         $invoice_id = $request->id;
         $invoice = Invoice::withTrashed()->whereId($invoice_id)->restore();
         session()->flash('Restore');
+        return redirect('/invoices');
+    }
+
+    public function export()
+    {
+        return Excel::download(new InvoicesExport, 'invoicesReport.xlsx');
+    }
+
+    public function getChangePaymentStatus($id)
+    {
+        $invoice = Invoice::where('id', $id)->first();
+
+        return view('invoices.change_payment_status', compact('invoice'));
+    }
+    public function ChangePaymentStatus(Request $req, $id)
+    {
+        $invoice = Invoice::where('id', $id)->first();
+
+        if ($req->set_as_paid) {
+            $invoice->paid_amount = $invoice->total;
+            $invoice->status = 'Paid';
+            $invoice->set_as_paid = 1;
+        } else {
+            $invoice->paid_amount = $req->paid_amount;
+            $invoice->status = $req->status;
+        }
+        $invoice->payment_date = $req->payment_date;
+
+        $invoice->update();
+        session()->flash('Change_Status');
         return redirect('/invoices');
     }
 }

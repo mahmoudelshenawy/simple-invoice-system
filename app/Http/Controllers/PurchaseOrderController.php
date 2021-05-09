@@ -65,14 +65,20 @@ class PurchaseOrderController extends Controller
         $purchase->products()->detach();
         $purchase->services()->detach();
         $purchase->expensesInvestments()->detach();
-        foreach ($proIds as $index => $proId) {
-            $purchase->products()->attach($proId, ['quantity' => $proQtys[$index]]);
+        if (!empty($proIds)) {
+            foreach ($proIds as $index => $proId) {
+                $purchase->products()->attach($proId, ['quantity' => $proQtys[$index]]);
+            }
         }
-        foreach ($servIds as $index => $servId) {
-            $purchase->services()->attach($servId, ['quantity' => $servQtys[$index]]);
+        if (!empty($servIds)) {
+            foreach ($servIds as $index => $servId) {
+                $purchase->services()->attach($servId, ['quantity' => $servQtys[$index]]);
+            }
         }
-        foreach ($expIds as $index => $expId) {
-            $purchase->expensesInvestments()->attach($expId, ['quantity' => $expQtys[$index]]);
+        if (!empty($expIds)) {
+            foreach ($expIds as $index => $expId) {
+                $purchase->expensesInvestments()->attach($expId, ['quantity' => $expQtys[$index]]);
+            }
         }
         session()->flash('complete_data');
         return redirect('purchase_order_data/' . $purchase->id);
@@ -81,7 +87,7 @@ class PurchaseOrderController extends Controller
     public function completePurchaseOrderData($id)
     {
         $purchase = PurchaseOrder::findOrFail($id);
-        $admins = User::role('owner')->get();
+        $admins = User::role('Administrator')->get();
 
         session()->flash('complete_data');
         return view('purchase.purchase_orders.complete_purchase_data', compact('purchase', 'admins'));

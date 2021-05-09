@@ -105,7 +105,9 @@
 													</span>
 												</td>
 												<td>
-													{{$sale->created_at}}
+													{{$sale->created_at->format('m/d/Y')}}
+													<br>
+													{{$sale->created_at->format('h:i:s A')}}
 												</td>
 												<td>
 													<a href="/sales_data/{{$sale->id}}" class="btn btn-sm btn-primary">

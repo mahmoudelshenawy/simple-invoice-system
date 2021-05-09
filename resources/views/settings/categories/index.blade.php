@@ -155,7 +155,7 @@
                                 <option value="">حدد فئة</option>
                                 <option value="products">Products</option>
                                 <option value="services">Services</option>
-                                <option value="expenses">Expenses</option>
+                                <option value="expense">Expenses</option>
                                 <option value="investment">Investment</option>
                             </select>
                             @error('type')

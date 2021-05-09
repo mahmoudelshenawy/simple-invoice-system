@@ -24,9 +24,8 @@ class ClientsRequest extends FormRequest
     public function rules()
     {
         return [
-            // 'reference_number' => 'required|numeric|max:6|unique:clients,reference_number,' . $this->id ?? '',
-            'reference_number' => 'required|numeric|unique:clients,reference_number',
-            'legal_name' => 'required|unique:clients,legal_name',
+            'reference_number' => 'required|numeric|unique:clients,reference_number,' . $this->reference_number,
+            'legal_name' => 'required',
             'name' => 'required',
             'tin' => 'required|max:9',
             'agent' => 'required|numeric',

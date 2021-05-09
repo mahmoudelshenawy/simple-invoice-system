@@ -62,6 +62,16 @@
 	}
 </script>
 @endif
+@if (session()->has('Change_Status'))
+<script>
+  window.onload = function() {
+		notif({
+			msg: "تم تحديث حالة الفاتورة بنجاح",
+			type: "success"
+		})
+	}
+</script>
+@endif
 				<!--Row-->
 				<div class="row row-sm">
 					<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
@@ -74,7 +84,7 @@
 									class="fas fa-plus"></i>&nbsp; اضافة فاتورة جديد</a>
 							     	@endcan
 									 @can('control_invoices')
-									 <a class="modal-effect btn btn-sm btn-primary mr-4" href="{{ url('export_invoices') }}"
+									 <a class="btn btn-sm btn-primary mr-4" href="{{ url('/invoices/export/') }}"
 										 style="color:white"><i class="fas fa-file-download"></i>&nbsp;تصدير اكسيل</a>
 								 @endcan
 								</div>
@@ -141,8 +151,9 @@
 													{{$invoice->admin->name ?? ''}}
 												</td>
 												<td>
-													
-													{{$invoice->created_at->toDateString()}}
+													{{$invoice->created_at->format('m/d/Y')}}
+													<br>
+													{{$invoice->created_at->format('h:i:s A')}}
 												</td>
 												<td>
 														<div class="dropdown">
@@ -167,8 +178,8 @@
 																	@endcan
 				
 																	@can('control_invoices')
-																		<a class="modal-effect dropdown-item"
-																			href="#changeInvoiceStatus" data-toggle="modal"   data-effect="effect-scale">
+																		<a class="dropdown-item"
+																			href="invoices/change_payment_status/{{$invoice->id}}">
 																			<i class="text-success fas fa-money-bill"></i>&nbsp;&nbsp;
 																			تغير
 																			حالة
@@ -292,7 +303,7 @@
                    </div>
                    <div class="modal-footer">
                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                       <button type="submit" class="btn btn-danger">تاكيد</button>
+                       <button type="submit" class="btn btn-success">تاكيد</button>
                    </div>
                </form>
            </div>

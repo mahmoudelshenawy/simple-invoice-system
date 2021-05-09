@@ -10,7 +10,7 @@ class Invoice extends Model
     use SoftDeletes;
     protected $dates = ['deleted_at'];
     protected $guarded = [];
-
+    protected $with = ['client'];
 
     public function client()
     {

@@ -22,6 +22,26 @@
 				<!-- breadcrumb -->
 @endsection
 @section('content')
+@if (session()->has('Update'))
+<script>
+  window.onload = function() {
+		notif({
+			msg: "تم تحديث بيانات العميل بنجاح",
+			type: "success"
+		})
+	}
+</script>
+@endif
+@if (session()->has('Delete'))
+<script>
+  window.onload = function() {
+		notif({
+			msg: "تم حدف بيانات العميل بنجاح",
+			type: "success"
+		})
+	}
+</script>
+@endif
 				<!--Row-->
 				<div class="row row-sm">
 					<div class="col-sm-12 col-md-12 col-lg-12 col-xl-12 grid-margin">
@@ -81,14 +101,15 @@
 														{{$client->email}}
 												</td>
 												<td>
-													<a href="#" class="btn btn-sm btn-primary">
-														<i class="las la-search"></i>
-													</a>
-													<a href="#" class="btn btn-sm btn-info">
+													<a href="/clients/{{$client->id}}/edit" class="btn btn-sm btn-outline-info">
 														<i class="las la-pen"></i>
+                                                            تعديل    
 													</a>
-													<a href="#" class="btn btn-sm btn-danger">
-														<i class="las la-trash"></i>
+													<a href="#" class="modal-effect btn btn-sm btn-outline-danger" data-client_id="{{ $client->id }}"
+														data-effect="effect-scale"
+														data-id="{{ $client->id }}" data-client_name="{{ $client->legal_name }}"
+														data-toggle="modal" data-target="#deleteserviceModal">
+														<i class="las la-trash"></i> مسح
 													</a>
 												</td>
 											</tr>
@@ -100,6 +121,35 @@
 							</div>
 						</div>
 					</div><!-- COL END -->
+
+				 <!-- delete -->
+				 <div class="modal fade" id="deleteserviceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+				 aria-hidden="true">
+				 <div class="modal-dialog" role="document">
+					 <div class="modal-content">
+						 <div class="modal-header">
+							 <h5 class="modal-title">حذف بيانات العميل</h5>
+							 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								 <span aria-hidden="true">&times;</span>
+							 </button>
+						 </div>
+						 <form action="/clients/test" method="post">
+							 {{ method_field('delete') }}
+							 {{ csrf_field() }}
+							 <div class="modal-body">
+								 <p>هل انت متاكد من عملية الحذف ؟</p><br>
+								 <input type="hidden" name="client_id" id="client_id" value="">
+								 <input class="form-control" name="client_name" id="client_name_delete" type="text" readonly>
+							 </div>
+							 <div class="modal-footer">
+								 <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
+								 <button type="submit" class="btn btn-danger">تاكيد</button>
+							 </div>
+						 </form>
+					 </div>
+				 </div>
+			 </div>
+			 {{-- delete	 --}}
 				</div>
 				<!-- row closed  -->
 			</div>
@@ -132,4 +182,16 @@
  <script src="{{ URL::asset('assets/plugins/notify/js/notifit-custom.js') }}"></script>
  <!--Internal  Modal js -->
  <script src="{{ asset('assets/js/modal.js') }}"></script>
+
+ <script>
+	$('#deleteserviceModal').on('show.bs.modal', function(event) {
+	   var button = $(event.relatedTarget)
+	   var id = button.data('id')
+	   var name = button.data('client_name')
+	   var modal = $(this)
+	   modal.find('.modal-body #client_id').val(id);
+	   modal.find('.modal-body #client_name_delete').val(name);
+   })
+</script>
+
 @endsection

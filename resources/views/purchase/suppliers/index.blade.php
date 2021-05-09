@@ -58,10 +58,13 @@
 						<div class="card">
 							<div class="card-header pb-0">
 								<!--Add Btn-->
-								<div class="d-flex justify-content-between">
+								<div class="d-flex justify-content-start">
 									@can('control_suppliers')
 									<a href="suppliers/create" class="btn btn-sm btn-primary" style="color:white"><i
 									class="fas fa-plus"></i>&nbsp; اضافة مورد</a>
+							     	@endcan
+									 @can('control_suppliers')
+									<a href="suppliers/list" class="btn btn-sm btn-primary mr-2" style="color:white"><i class="fas fa-th-large"></i></i>&nbsp;عرض قايمة الموردين</a>
 							     	@endcan
 								</div>
 								

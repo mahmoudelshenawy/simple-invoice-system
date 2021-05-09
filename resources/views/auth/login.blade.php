@@ -6,11 +6,11 @@
 @section('content')
 		<div class="container-fluid">
 			<div class="row no-gutter">
-				<!-- The image half  "ht-xl-80p wd-md-100p wd-xl-80p" -->
+				<!-- The image half  "ht-xl-80p wd-md-100p wd-xl-80p" height: 100vh;object-fit:contain;min-width:100%-->
 				<div class="col-md-6 col-lg-6 col-xl-7 d-none d-md-flex bg-primary-transparent">
 					<div class="row mx-auto text-center">
 						<div class="col-md-12 col-lg-12 col-xl-12 my-auto mx-auto" class="login-side-panner">
-							{{-- <img src="{{URL::asset('assets/img/backgrounds/bg.jpg')}}" class="img-fluid" alt="logo" style="height: 100vh;object-fit:contain;width:100%"> --}}
+							<img src="{{URL::asset('assets/img/backgrounds/bg.jpg')}}" class="login-image"  alt="logo" style="">
 						</div>
 					</div>
 				</div>

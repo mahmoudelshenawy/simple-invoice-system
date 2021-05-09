@@ -3,19 +3,19 @@
 function status_color($status)
 {
     switch ($status) {
-        case 'Pending':
+        case 'Pending Invoice':
+        case 'Awaiting':
             return 'badge badge-warning';
             break;
-        case 'Closed':
-            return 'badge badge-success';
-            break;
         case 'Refused':
+        case 'Closed':
             return 'badge badge-danger';
             break;
         case 'Accepted':
+        case 'Invoiced':
             return 'badge badge-info';
             break;
-        case 'In Preogress':
+        case 'In Progress':
             return 'badge badge-primary';
             break;
 

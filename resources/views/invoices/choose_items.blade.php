@@ -216,7 +216,7 @@
         $("input[type=checkbox]").on('change', function(e){
             var  id = e.target.value;
            if($('#product_' + id).is(":checked")){
-               console.log('dont master')
+
                $(`#quantity_${id}`).removeAttr('disabled')
                $(`#quantity_${id}`).removeAttr('hidden')
            }else{
@@ -233,7 +233,6 @@
            }
 
            if($('#expense_' + id).is(":checked")){
-               console.log('faiiiiil')
                $(`#quantity_expense_${id}`).removeAttr('disabled')
                $(`#quantity_expense_${id}`).removeAttr('hidden')
            }else{

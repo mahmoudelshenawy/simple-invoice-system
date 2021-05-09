@@ -5,8 +5,8 @@
 				<!-- breadcrumb -->
 				<div class="breadcrumb-header justify-content-between">
 					<div class="d-flex">
-                        <h4 class="content-title mb-0 my-auto"><a href="/clients">العملاء</a>
-							</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ قائمةالعملاء</span>
+                        <h4 class="content-title mb-0 my-auto"><a href="/suppliers">الموردين</a>
+							</h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ قائمةالموردين</span>
                     </div>
 				</div>
 				<!-- breadcrumb -->
@@ -21,7 +21,6 @@
 									<div class="main-content-left main-content-left-contacts">
 										<nav class="nav main-nav-line main-nav-line-chat  pl-3">
 											<a class="nav-link active" data-toggle="tab" href="">All Contacts</a>
-											<a class="nav-link" data-toggle="tab" href="">Favorites</a>
 										</nav>
 										<div class="main-contacts-list" id="mainContactList">
 											
@@ -29,15 +28,15 @@
                                             <div class="main-contact-label">
 												{{$letter}}
 											</div>
-                                            @foreach ($group as $client)
-                                            <div class="main-contact-item" data-client="{{$client}}">
+                                            @foreach ($group as $supplier)
+                                            <div class="main-contact-item" data-supplier="{{$supplier}}">
 												<div class="main-avatar online">
 													{{$letter}}
 												</div>
 												<div class="main-contact-body">
-													<h6>{{$client['legal_name']}}</h6>
-                                                    <span class="phone">{{$client['phone_1']}}</span>
-                                                    <span class="phone">{{$client['email']}}</span>
+													<h6>{{$supplier['legal_name']}}</h6>
+                                                    <span class="phone">{{$supplier['phone_1']}}</span>
+                                                    <span class="phone">{{$supplier['email']}}</span>
 												</div>
 												<a class="main-contact-star" href="">
 													<i class="fe fe-star mr-1 text-warning"></i>
@@ -75,7 +74,7 @@
 												</div>
 											</div>
 											{{-- tabs content --}}
-											<div class="panel-body tabs-menu-body main-content-body-right border d-none"  id="client-info">
+											<div class="panel-body tabs-menu-body main-content-body-right border d-none"  id="supplier-info">
 												<div class="tab-content">
 											   <!-- Tab one -->
 											   <div class="tab-pane active" id="tab4">
@@ -193,20 +192,20 @@
 		$('.main-contact-item').removeClass('selected')
 		
 		$(this).addClass('selected')
-		var client = $(this).data('client')
-		$('#client-info').removeClass('d-none')
-		$('#name').text(client.name)
-		$('#legal_name').text(client.legal_name)
-		$('#tin').text(client.tin)
-		$('#phone_1').text(client.phone_1)
-		$('#phone_2').text(client.phone_2)
-		$('#email').text(client.email)
-		$('#bank_account').text(client.bank_account)
-		$('#bank_name').text(client.name)
-		$('#currency').text(client.currency)
+		var supplier = $(this).data('supplier')
+		$('#supplier-info').removeClass('d-none')
+		$('#name').text(supplier.name)
+		$('#legal_name').text(supplier.legal_name)
+		$('#tin').text(supplier.tin)
+		$('#phone_1').text(supplier.phone_1)
+		$('#phone_2').text(supplier.phone_2)
+		$('#email').text(supplier.email)
+		$('#bank_account').text(supplier.bank_account)
+		$('#bank_name').text(supplier.name)
+		$('#currency').text(supplier.currency)
 		var tr=''
 		var tr_2=''
-		client.sales.forEach(function(sale){
+		supplier.purchase_invoices.forEach(function(sale){
            tr += `
 		   <td>${sale.reference_number}</td>
 		   <td>${sale.title}</td>
@@ -216,7 +215,7 @@
 		   `
 		})
 		$('#sales_table').html(tr)
-		client.invoices.forEach(function(invoice){
+		supplier.purchase_orders.forEach(function(invoice){
            tr_2 += `
 		   <td>${invoice.reference_number}</td>
 		   <td>${invoice.title}</td>
@@ -226,7 +225,7 @@
 		   `
 		})
 		$('#invoices_table').html(tr_2)
-		console.log(client)
+		console.log(supplier)
 	})
 </script>
 @endsection

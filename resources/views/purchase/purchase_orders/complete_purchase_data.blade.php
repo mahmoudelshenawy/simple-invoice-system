@@ -257,7 +257,6 @@
                                         <label for="inputName" class="control-label">العملة</label>
                                         <select name="currency" id="currency" class="form-control @error('currency') is-invalid @enderror select2">
                                             <option value="unspecified">حدد العملة</option>
-                                            {{-- <option value="USD $ - US Dollar" selected>USD $ - US Dollar</option> --}}
                                             @foreach (currencies() as $key=>$val)
                                             <option value="USD $ - US Dollar" selected>{{$key}}-{{$val}}</option>
                                             @endforeach
@@ -291,13 +290,19 @@
                                           {{-- 3 --}}
                                    <div class="row">
                                     <div class="col">
-                                        <label for="inputName" class="control-label">(طلب شراء) الحالة</label>
+                                        <label for="inputName" class="control-label">
+                                           <span class="option_order">  (طلب شراء) </span>
+                                           <span class="option_delivery">(مزكرة تسليم مورد)</span>
+                                            الحالة</label>
                                         <select name="status" id="status_purchase_order" class="form-control @error('status') is-invalid @enderror">
                                             <option value=""> حدد حالة طلب الشراء</option>
-                                            <option value="Awaiting">Awaiting</option>
-                                            <option value="Refused">Refused</option>
+                                            <option value="Awaiting" class="option_order">Awaiting</option>
+                                            <option value="Refused" class="option_order">Refused</option>
                                             <option value="In Progress">In Progress</option>
-                                            <option value="Received">Received</option>
+                                            <option value="Received" class="option_order">Received</option>
+                                            <option value="Pending Invoive" class="option_delivery">Pending Invoice</option>
+                                            <option value="Closed" class="option_delivery">Closed</option>
+                                            <option value="Invoiced" class="option_delivery">Invoiced</option>
                                         </select>
                                             @error('status')
                                             <span class="text-danger" role="alert">
@@ -305,23 +310,6 @@
                                             </span>
                                         @enderror
                                     </div>
-                                    <div class="col">
-                                        <label for="inputName" class="control-label">(مزكرة تسليم مورد) الحالة</label>
-                                        <select name="status" id="status_delivery_note" class="form-control @error('status') is-invalid @enderror">
-                                            <option value="">حدد حالة مزكره توصيل المورد</option>
-                                            <option value="Pending Invoive">Pending Invoice</option>
-                                            <option value="In Progress">In Progress</option>
-                                            <option value="Closed">Closed</option>
-                                            <option value="Invoiced">Invoiced</option>
-                                        </select>
-                                            @error('status')
-                                            <span class="text-danger" role="alert">
-                                                <strong>{{ $message }}</strong>
-                                            </span>
-                                        @enderror
-                                    </div>
-        
-        
                                     <div class="col">
                                         <label>المشرف</label>
                                         <select name="agent" id="agent" class="form-control @error('agent') is-invalid @enderror">
@@ -474,9 +462,26 @@
   
       <script>
    // calculate Total
+   var purchase_type = $("input[type=radio]").val()
+   if(purchase_type == 'purchase_order'){
+       $('.option_delivery').addClass('d-none')
+       $('.option_order').removeClass('d-none')
+   }else{
+    $('.option_order').addClass('d-none')
+    $('.option_delivery').removeClass('d-none')
+   }
+
    $("input[type=radio]").on('click', function(e){
       console.log(e.target.value)
+      var type = e.target.value
     //   toggle status select
+    if(type == 'purchase_order'){
+        $('.option_delivery').addClass('d-none')
+       $('.option_order').removeClass('d-none')
+   }else{
+    $('.option_order').addClass('d-none')
+    $('.option_delivery').removeClass('d-none')
+   }
      })
      
       </script>

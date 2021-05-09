@@ -201,7 +201,7 @@
                                     <div class="col">
                                         <label>تاريخ البيع/التسجيل</label>
                                         <input class="form-control fc-datepicker @error('date') is-invalid @enderror" name="date" placeholder="YYYY-MM-DD"
-                                        type="text" value="{{ $invoice->date }}">
+                                        type="text" value="{{ $invoice->date ?? date('Y-m-d')}}">
                                         @error('date')
                                         <span class="text-danger" role="alert">
                                             <strong>{{ $message }}</strong>

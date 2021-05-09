@@ -18,6 +18,7 @@ Route::group(['middleware' => ['auth']], function () {
     // settings
     Route::resource('settings/categories', 'CategoryController');
     // Invoices
+    Route::get('invoices/export', 'InvoiceController@export');
     Route::resource('invoices', 'InvoiceController');
     Route::get('choose_items_of_invoice/{id}', 'InvoiceController@chooseItemsOfInvoice');
     Route::post('add_items_to_invoice/{id}', 'InvoiceController@addItemsToInvoice')->name('add_items_to_invoice');
@@ -25,7 +26,8 @@ Route::group(['middleware' => ['auth']], function () {
     Route::post('invoice_data/{id}', 'InvoiceController@storeInvoiceData')->name('store_invoice_data');
     Route::get('archieved_invoices', 'InvoiceController@getArchievedInvoices');
     Route::post('restore_invoice', 'InvoiceController@restoreInvoice');
-
+    Route::get('invoices/change_payment_status/{id}', 'InvoiceController@getChangePaymentStatus');
+    Route::post('invoices/change_payment_status/{id}', 'InvoiceController@ChangePaymentStatus')->name('change_payment_status');
     Route::get('paid_invoices', 'InvoiceController@getPaidInvoices');
     Route::get('unpaid_invoices', 'InvoiceController@getUnPaidInvoices');
     Route::get('partial_paid_invoices', 'InvoiceController@getPartialPaidInvoices');
@@ -69,6 +71,7 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('sales_data/{id}', 'SaleController@completeSalesData');
     Route::post('sales_data/{id}', 'SaleController@storeSalesData')->name('store_sales_data');
 
+    Route::get('suppliers/list', 'SupplierController@getSuppliersList');
     Route::resource('suppliers', 'SupplierController');
 
     // Purchase Order

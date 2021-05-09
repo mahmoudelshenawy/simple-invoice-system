@@ -111,7 +111,9 @@
 													@endif
 												</td>
 												<td>
-													{{$purchase->created_at}}
+													{{$purchase->created_at->format('m/d/Y')}}
+													<br>
+													{{$purchase->created_at->format('h:i:s A')}}
 												</td>
 												<td>
 													<a href="/purchase_invoice_data/{{$purchase->id}}" class="btn btn-sm btn-primary">
@@ -194,7 +196,7 @@
                    </div>
                    <div class="modal-footer">
                        <button type="button" class="btn btn-secondary" data-dismiss="modal">الغاء</button>
-                       <button type="submit" class="btn btn-danger">تاكيد</button>
+                       <button type="submit" class="btn btn-primary">تاكيد</button>
                    </div>
                </form>
            </div>

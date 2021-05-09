@@ -26,7 +26,10 @@
      -webkit-appearance: none;
     margin: 0;
     }
-    .login-side-panner{
-        background-image: url({{url('public/assets/img/backgrounds/bg.jpg')}})
+    .login-image{
+        height: 600px;
+        width: 600px;
+        border-radius: 50%;
+        object-fit: cover;
     }
 </style>

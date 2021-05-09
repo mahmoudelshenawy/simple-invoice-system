@@ -19,6 +19,7 @@ class CreateProfilesTable extends Migration
             $table->text('tin');
             $table->text('phone_1')->nullable();
             $table->text('phone_2')->nullable();
+            $table->text('job')->nullable();
             $table->text('language')->nullable();
             $table->text('address')->nullable();
             $table->string('image')->nullable();
