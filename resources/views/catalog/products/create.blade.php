@@ -69,7 +69,7 @@
                                         <ul class="nav panel-tabs main-nav-line">
                                             <li><a href="#tab4" class="nav-link active" data-toggle="tab">بيانات عامة</a></li>
                                             <li><a href="#tab5" class="nav-link" data-toggle="tab">بيانات تجارية</a></li>
-                                            <li><a href="#tab6" class="nav-link" data-toggle="tab">الكمية</a></li>
+                                            <li><a href="#tab6" class="nav-link" data-toggle="tab"> الكمية اول المدة</a></li>
                                             <li><a href="#tab7" class="nav-link" data-toggle="tab">الصور و المرفقات</a></li>
                                         </ul>
                                     </div>
@@ -161,8 +161,8 @@
                                        {{-- 1 --}}
                                    <div class="row">
                                     <div class="col">
-                                        <label for="inputName" class="control-label">سعر البيع</label>
-                                        <input type="number" class="form-control @error('sales_price') is-invalid @enderror" id="inputName" name="sales_price" value="0.00"
+                                        <label for="inputName" class="control-label"> سعر البيع الاقتراضى</label>
+                                        <input type="number" class="form-control @error('sales_price') is-invalid @enderror" id="sales_price" name="sales_price" value="0.00"
                                             title="يرجي ادخال رقم المنتج" value="{{old('sales_price')}}">
                                            
                                             @error('sales_price')
@@ -172,8 +172,30 @@
                                         @enderror
                                     </div>
                                     <div class="col">
+                                        <label for="inputName" class="control-label">سعر البيع الخاص</label>
+                                        <input type="number" class="form-control @error('special_sales_price') is-invalid @enderror" id="special_sales_price" name="special_sales_price" value="0.00"
+                                            title="يرجي ادخال رقم المنتج" value="{{old('special_sales_price')}}">
+                                           
+                                            @error('special_sales_price')
+                                            <span class="text-danger" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col">
+                                        <label for="inputName" class="control-label">سعر البيع الجملة</label>
+                                        <input type="number" class="form-control @error('whole_sales_price') is-invalid @enderror" id="whole_sales_price" name="whole_sales_price" value="0.00"
+                                            title="يرجي ادخال رقم المنتج" value="{{old('whole_sales_price')}}">
+                                           
+                                            @error('whole_sales_price')
+                                            <span class="text-danger" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
+                                    <div class="col">
                                         <label for="inputName" class="control-label">سعر الشراء</label>
-                                        <input type="number" class="form-control @error('purchase_price') is-invalid @enderror" id="inputName" name="purchase_price" value="0.00"
+                                        <input type="number" class="form-control @error('purchase_price') is-invalid @enderror" id="purchase_price" name="purchase_price" value="0.00"
                                             title="يرجي ادخال رقم المنتج" value="{{old('purchase_price')}}">
                                            
                                             @error('purchase_price')
@@ -181,8 +203,22 @@
                                                 <strong>{{ $message }}</strong>
                                             </span>
                                         @enderror
-                                    </div>
-        
+                                        </div>
+                                   </div>   
+                                   <br>
+                                   {{-- 2 --}}
+                                   <div class="row">
+                                    <div class="col">
+                                        <label for="inputName" class="control-label">هامش الربح</label>
+                                        <input type="number" class="form-control @error('profit_margin') is-invalid @enderror" id="profit_margin" name="profit_margin" value="0.00"
+                                            title="يرجي ادخال رقم المنتج" value="{{old('profit_margin')}}" readonly>
+                                           
+                                            @error('profit_margin')
+                                            <span class="text-danger" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                        </div>
                                     <div class="col">
                                         <label for="inputName" class="control-label">الخصم(%)</label>
                                         <input type="number" class="form-control @error('discount') is-invalid @enderror" id="inputName" name="discount" value="0.00"
@@ -208,14 +244,30 @@
                                             </span>
                                         @enderror
                                     </div>
-                                  <br>
-                                   </div>   
+                                   </div>
                                    </div>
                                    <!--End Of Tab Two-->
                                    <!--Tab Three-->
                                    <div class="tab-pane" id="tab6">
                                  {{-- 1 --}}
                                  <div class="row">
+                                    <div class="col">
+                                        <label for="inputName" class="control-label">المخزن</label>
+                                        @php
+                                            $stores = \App\Store::all();
+                                        @endphp
+                                        <select name="store_id" id="store_id" class="form-control select2">
+                                            <option value="">حدد المخزن</option>
+                                            @foreach ($stores as $store)
+                                                <option value="{{$store->id}}">{{$store->name}}</option>
+                                            @endforeach
+                                        </select>
+                                            @error('store_id')
+                                            <span class="text-danger" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
+                                    </div>
                                     <div class="col">
                                         <label for="inputName" class="control-label">الكمية</label>
                                         <input type="number" class="form-control @error('stock') is-invalid @enderror" id="inputName" name="stock"
@@ -317,28 +369,11 @@
             dateFormat: 'yy-mm-dd'
         }).val();
 
-        $(document).ready(function(){
-            $('#sectionIDs').on('change' , function(e){
-                var id = e.target.value
-                console.log(id)
-                if(typeof parseInt(id) == 'number'){
-                $.ajax({
-                        url: `/invoices/products/${id}`,
-                        type: "GET",
-                        dataType: "json",
-                        success: function(data) {
-                            console.log(data)
-                            $('select[name="product"]').empty();
-                            $.each(data, function(key, value) {
-                                var html = `<option value="${value.id}">${value.name}</option>`
-                                $('select[name="product"]').html(html);
-                            });
-                        },
-                        
-                    });
-                }
-            })
-        })
+       $('#purchase_price').on('change', function(e){
+           var purchase = e.target.value;
+           var sales = $('#sales_price').val();
+           $('#profit_margin').val(sales - purchase)
+       })
     </script>
 
   

@@ -124,7 +124,7 @@ window.onload = function() {
                             </select>
                         </div>
                         <div class="col-lg-3 d-flex align-items-center">
-                            <label class="ckbox mt-2"><input type="checkbox" name="super_admin" @role('Administrator') checked @else  @endrole id="super_admin_check"><span>Set as Administrator</span></label>
+                            <label class="ckbox mt-2"><input type="checkbox" name="super_admin" {{$user->hasRole('Administrator') ? 'checked' : ''}} id="super_admin_check"><span>Set as Administrator</span></label>
                         </div> 
                     </div>
 

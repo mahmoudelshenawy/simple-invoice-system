@@ -18,16 +18,46 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
+use DataTables;
 
 class InvoiceController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        $invoices = Invoice::all();
+        $invoices = Invoice::query()->get();
         $clients = Client::all(['name', 'legal_name', 'id']);
         $archieved = false;
         return view('invoices.index', compact('invoices', 'archieved', 'clients'));
+    }
+
+    public function invoices_with_filters(Request $request)
+    {
+        if ($request->ajax()) {
+            $invoices = Invoice::query();
+            return DataTables::of($invoices)
+                ->addIndexColumn()
+                ->addColumn('client', function ($q) {
+                    $client =  $q->client;
+                    return view('invoices.filter.td.client', compact('client'));
+                })
+                ->editColumn('created_at', function ($q) {
+                    return $q->created_at->format('m/d/Y') . '<br>' . $q->created_at->format('h:i:s A');
+                })
+                ->editColumn('status', 'invoices.filter.td.status')
+                ->addColumn('actions', 'invoices.filter.td.actions')
+                ->filter(function ($instance) use ($request) {
+                    if ($request->get('search_name')) {
+                        $instance->searchByName($request->search_name);
+                    }
+                    if ($request->get('search_date')) {
+                        $instance->searchByDate($request->search_date);
+                    }
+                })
+                ->rawColumns(['client', 'created_at', 'status', 'actions'])
+                ->make(true);
+        }
+        return view('invoices.filter.invoices');
     }
     public function getPaidInvoices()
     {

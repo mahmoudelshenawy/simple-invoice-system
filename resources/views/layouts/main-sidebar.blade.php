@@ -35,6 +35,7 @@
 							<span class="side-menu__label">الفواتير</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="{{ url('/' . $page='invoices') }}">قائمة الفواتير</a></li>
+							<li><a class="slide-item" href="{{ url('/invoices_with_filters') }}">بحث و فلترة الفواتير</a></li>
 							<li><a class="slide-item" href="{{ url('/' . $page='paid_invoices') }}"> قائمة الفواتيرالمدفوعة</a></li>
 							<li><a class="slide-item" href="{{ url('/' . $page='unpaid_invoices') }}">قائمة الفواتير الغير مدفوعة</a></li>
 							<li><a class="slide-item" href="{{ url('/' . $page='partial_paid_invoices') }}">قائمة الفواتير المدفوعة جزئيا</a></li>
@@ -74,6 +75,7 @@
 							<span class="side-menu__label">الإعدادات</span><i class="angle fe fe-chevron-down"></i></a>
 						<ul class="slide-menu">
 							<li><a class="slide-item" href="{{ url('/settings/categories') }}">الأقسام</a></li>
+							<li><a class="slide-item" href="{{ url('/settings/stores') }}">المخازن</a></li>
 						</ul>
 					</li>
 					<li class="side-item side-item-category">العملاء</li>

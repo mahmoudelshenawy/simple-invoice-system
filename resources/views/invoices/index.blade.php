@@ -88,10 +88,29 @@
 										 style="color:white"><i class="fas fa-file-download"></i>&nbsp;تصدير اكسيل</a>
 								 @endcan
 								</div>
+								{{-- filter --}}
+								<div class="row my-2" id="filter">
+									<div class="col">
+											<label for="inputName" class="control-label">بحث بالإسم</label>
+											<input type="text" class="form-control" id="search_by_name" name="search_by_name" value="{{old('search_by_name')}}" placeholder="ابحث بواسطه اسم العميل او رقم الفاتورة">
+									</div>
+									<div class="col">
+										<label>تاريخ إصدار الفاتورة</label>
+										<input class="form-control fc-datepicker" name="search_by_date" placeholder="YYYY-MM-DD"
+											type="text" value="{{ date('Y-m-d') }}" id="search_by_date">
+									</div>
+									<div class="col">
+										<label>تاريخ التحصيل الفاتورة</label>
+										<input class="form-control fc-datepicker" name="search_by_due_date" placeholder="YYYY-MM-DD"
+											type="text" value="{{ date('Y-m-d') }}" id="search_by_due_date">
+									</div>
+								</div>
+								{{-- buttons --}}
+							
 							</div>
 							<div class="card-body">
 								<div class="table-responsive ">
-									<table id="example1" class="table key-buttons text-md-nowrap" data-page-length='50'style="text-align: center">
+									<table id="syetem-table" class="table key-buttons text-md-nowrap" data-page-length='50'style="text-align: center">
 										<thead>
 											<tr>
 												<th class="wd-lg-5p"><span>#</span></th>
@@ -265,7 +284,7 @@
 		  </div>
 		  <div class="modal-body">
 			  هل انت متاكد من عملية الارشفة ؟
-			  <input type="hidden" name="invoice_id" id="invoice_id" value="">
+			  <input type="hidden" name="invoice_id" id="invoice_id_transfer" value="">
 
 		  </div>
 		  <div class="modal-footer">
@@ -407,7 +426,35 @@ aria-hidden="true">
 <!--Internal  Datepicker js -->
 <script src="{{URL::asset('assets/plugins/jquery-ui/ui/widgets/datepicker.js')}}"></script>
 
- <script>
+  <script>
+     //datatable base
+	var table = $('#syetem-table').DataTable({
+		lengthChange: false,
+		"sDom": "rtipl",
+		language: {
+			searchPlaceholder: 'Search...',
+			sSearch: '',
+			lengthMenu: '_MENU_',
+		}
+	});
+    // filter by name
+	   $("#search_by_name").on('keyup' , function(e){
+	         var text = e.target.value;
+	            $.ajax({
+                        url: "/invoices",
+                        type: "GET",
+						data:{
+							text : text
+						},
+                        dataType: "json",
+                        success: function(data) {    
+                        console.log(data)
+						table.ajax.reload();
+                        },
+                });
+	})	
+
+	// End filter
 	   var date = $('.fc-datepicker').datepicker({
               dateFormat: 'yy-mm-dd',
           }).val();
@@ -423,7 +470,7 @@ aria-hidden="true">
             var button = $(event.relatedTarget)
             var invoice_id = button.data('invoice_id')
             var modal = $(this)
-            modal.find('.modal-body #invoice_id').val(invoice_id);
-        })
+            modal.find('.modal-body #invoice_id_transfer').val(invoice_id);
+        })	
 </script>
 @endsection

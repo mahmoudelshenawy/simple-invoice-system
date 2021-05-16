@@ -28,4 +28,24 @@ class Invoice extends Model
     {
         return $this->belongsToMany(Service::class)->withPivot('quantity');
     }
+
+    public function scopeSearchByName($query, $value)
+    {
+
+        // return $query->where('reference_number', 'like', '%' . $value . '%')
+        //     ->orWhere('title', 'like', '%' . $value . '%');
+        return $query->where(function ($q) use ($value) {
+            $q->where('reference_number', "like", "%" . $value . "%");
+        })->orWhere('title', "like", "%" . $value . "%");
+    }
+    public function scopeSearchByDate($query, $value)
+    {
+
+        // return $query->where('reference_number', 'like', '%' . $value . '%')
+        //     ->orWhere('title', 'like', '%' . $value . '%');
+        return $query->where(function ($q) use ($value) {
+            $q->whereDate('created_at',  $value);
+        })->orWhereDate('date', "like", "%" . $value . "%")
+            ->orWhere('delivery_date', "like", "%" . $value . "%");
+    }
 }

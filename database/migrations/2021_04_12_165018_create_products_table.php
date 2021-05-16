@@ -19,12 +19,15 @@ class CreateProductsTable extends Migration
             $table->string('name', 999);
             $table->string('image')->nullable();
             $table->float('sales_price')->default(0.00);
+            $table->float('special_sales_price')->default(0.00);
+            $table->float('whole_sales_price')->default(0.00);
+            $table->float('purchase_price')->default(0.00);
+            $table->float('profit_margin')->default(0.00);
             $table->integer('barcode')->nullable();
             $table->unsignedBigInteger('category_id');
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');
             $table->boolean('inactive')->default(false);
             $table->text('description')->nullable();
-            $table->float('purchase_price')->default(0.00);
             $table->float('discount')->default(0.00);
             $table->float('tax')->default(0.00);
             $table->float('min_price')->default(0.00);

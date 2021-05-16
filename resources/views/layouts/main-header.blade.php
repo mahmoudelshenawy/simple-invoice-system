@@ -223,8 +223,11 @@
 									</div>
 									<a class="dropdown-item" href="/profile/{{auth()->user()->id}}"><i class="bx bx-user-circle"></i>Profile</a>
 									<a class="dropdown-item" href="/profile/{{auth()->user()->id}}/edit"><i class="bx bx-cog"></i> Edit Profile</a>
-									<a class="dropdown-item" href=""><i class="bx bx-slider-alt"></i>Tasks</a>
-									<a class="dropdown-item" href=""><i class="bx bx-log-out"></i> Sign Out</a>
+									<a class="dropdown-item" href="/chat">
+										<i class='bx bxs-chat'></i>
+										Chat with Administrator</a>
+									<a class="dropdown-item" href="/tasks"><i class="bx bx-slider-alt"></i>Tasks</a>
+									<a class="dropdown-item" href="/logout"><i class="bx bx-log-out"></i> Sign Out</a>
 								</div>
 							</div>
 							<div class="dropdown main-header-message right-toggle">

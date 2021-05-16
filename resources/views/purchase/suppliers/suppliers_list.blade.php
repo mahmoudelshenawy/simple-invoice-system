@@ -207,21 +207,25 @@
 		var tr_2=''
 		supplier.purchase_invoices.forEach(function(sale){
            tr += `
+		   <tr>
 		   <td>${sale.reference_number}</td>
 		   <td>${sale.title}</td>
 		   <td>${sale.status}</td>
 		   <td>${sale.total}</td>
 		   <td>	<a href="/choose_items_of_sale/${sale.id}" class="btn btn-sm btn-info"><i class="las la-pen"></i>	</a></td>
+		   </tr>
 		   `
 		})
 		$('#sales_table').html(tr)
 		supplier.purchase_orders.forEach(function(invoice){
            tr_2 += `
+		   <tr>
 		   <td>${invoice.reference_number}</td>
 		   <td>${invoice.title}</td>
 		   <td>${invoice.status}</td>
 		   <td>${invoice.total}</td>
 		   <td>	<a href="/choose_items_of_invoice/${invoice.id}" class="btn btn-sm btn-info"><i class="las la-pen"></i>	</a></td>
+		</tr>
 		   `
 		})
 		$('#invoices_table').html(tr_2)

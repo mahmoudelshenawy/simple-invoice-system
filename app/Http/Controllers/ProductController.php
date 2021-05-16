@@ -9,6 +9,7 @@ use App\Section;
 use App\Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use File;
 
 class ProductController extends Controller
 {
@@ -28,14 +29,21 @@ class ProductController extends Controller
     public function store(ProductRequest $request)
     {
         $attrs = $request->only(['name', 'purchase_price', 'sales_price', 'barcode', 'category_id', 'inactive', 'description', 'discount', 'tax', 'min_price', 'stock', 'min_stock', 'managed_stock']);
-        $attrs['reference_number'] = 'PRO' . $request->reference_number;
+        if ($request->has('reference_number')) {
+            $attrs['reference_number'] = 'PRO' . $request->reference_number;
+        } else {
+            $attrs['reference_number'] = 'PRO' . sku_generator(10);
+        }
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            $file_name = $image->getClientOriginalName();
-            $attrs['image'] = $file_name;
             // save the image
             $imageName = $request->image->getClientOriginalName();
-            $request->image->move(public_path("Attachments/Products/" . $attrs['reference_number']), $imageName);
+            $extension = $request->image->getClientOriginalExtension();
+            $name = time();
+            $fileName =  $name . '.' . $extension;
+            $attrs['image'] = $fileName;
+            $request->image->move(public_path("Attachments/Products/" . $attrs['reference_number']), $fileName);
         }
 
         $product = Product::create($attrs);
@@ -86,8 +94,8 @@ class ProductController extends Controller
     {
         $product = Product::findOrFail($request->id);
         if ($product->image !== null || count($product->attachment) > 0) {
-            $path = "/Products/" . $product->reference_number;
-            Storage::disk('public_uploads')->deleteDirectory($path);
+            $path = "/Products" . $product->reference_number;
+            File::deleteDirectory(public_path("Attachments/Products/$product->reference_number"));
             $product->deleteAttachs();
         }
         $product->delete();
@@ -102,12 +110,15 @@ class ProductController extends Controller
 
             $image = $request->file('file_name');
             $file_name = $image->getClientOriginalName();
+            $extension = $image->getClientOriginalExtension();
+            $name = time();
+            $fileName = $name . '.' . $extension;
             // save the image
             $imageName = $request->file_name->getClientOriginalName();
-            $request->file_name->move(public_path("Attachments/Products/" . $product->reference_number), $imageName);
+            $request->file_name->move(public_path("Attachments/Products/" . $product->reference_number), $fileName);
 
             $product->attachment()->create([
-                'file_name' => $file_name,
+                'file_name' => $fileName,
                 'user_id' => auth()->user()->id
             ]);
             session()->flash('add_attach');
@@ -150,12 +161,12 @@ class ProductController extends Controller
     {
         if ($type == 'product') {
             $product = Product::where('reference_number', $request->reference_number)->first();
+
+            // remove file from directory
+            $file = "public/Attachments/Products/$request->reference_number/$request->file_name";
+            File::delete(public_path("Attachments/Products/$request->reference_number/$request->file_name"));
             // remove attach from db
             $attachment = Attachment::where('id', $request->id_file)->delete();
-            // remove file from directory
-
-            $file = "Attachments/Products/" . $request->reference_number . $request->file_name;
-            Storage::disk('products_uploads')->delete($request->reference_number . '/' . $request->file_name);
         } else if ($type == 'service') {
             $service = Service::where('reference_number', $request->reference_number)->first();
             // remove attach from db

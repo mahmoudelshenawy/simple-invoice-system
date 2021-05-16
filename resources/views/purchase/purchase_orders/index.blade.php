@@ -100,7 +100,7 @@
 													{{$purchase->supplier->name}}
 												</td>
 												<td>
-													<span class="{{status_color($purchase->status)}} text-white p-2 text-danger">
+													<span class="{{status_color($purchase->status)}} text-white p-2">
 														{{$purchase->status}}
 													</span>
 												</td>

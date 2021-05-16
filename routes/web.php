@@ -1,24 +1,25 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 
 Auth::routes();
-
-Route::get('/', function () {
-    return view('auth.login');
-});
-
 Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/index', function () {
         return view('index');
     });
+    Route::get('/', function () {
+        return view('index');
+    });
 
     // settings
     Route::resource('settings/categories', 'CategoryController');
+    Route::resource('settings/stores', 'StoreController');
     // Invoices
     Route::get('invoices/export', 'InvoiceController@export');
+    Route::get('invoices_with_filters', 'InvoiceController@invoices_with_filters');
     Route::resource('invoices', 'InvoiceController');
     Route::get('choose_items_of_invoice/{id}', 'InvoiceController@chooseItemsOfInvoice');
     Route::post('add_items_to_invoice/{id}', 'InvoiceController@addItemsToInvoice')->name('add_items_to_invoice');
@@ -91,5 +92,17 @@ Route::group(['middleware' => ['auth']], function () {
 
     // users & admins
     Route::resource('users', 'UserController');
+    Route::get('/logout', function () {
+        Auth::logout();
+        return redirect('/login');
+    });
+    // chat with admins
+    Route::get('chat', 'ChatWithAdmins@enterChatRoom');
+    Route::get('messages', 'ChatWithAdmins@fetchMessages');
+    Route::get('conversation/{id}', 'ChatWithAdmins@getMessagesFor');
+    Route::post('conversation/send', 'ChatWithAdmins@send');
+    Route::post('messages', 'ChatWithAdmins@sendMessage');
+
+    Route::resource('tasks', 'TaskController');
 });
 Route::get('/{page}', 'AdminController@index');

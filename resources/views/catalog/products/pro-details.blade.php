@@ -254,7 +254,7 @@
                                                                         <button class="btn btn-outline-danger btn-sm"
                                                                             data-toggle="modal"
                                                                             data-file_name="{{ $attachment->file_name }}"
-                                                                            data-refernce_number="{{ $product->reference_number }}"
+                                                                            data-reference_number="{{ $product->reference_number }}"
                                                                             data-id_file="{{ $attachment->id }}"
                                                                             data-target="#delete_file">حذف</button>
                                                                     @endcan

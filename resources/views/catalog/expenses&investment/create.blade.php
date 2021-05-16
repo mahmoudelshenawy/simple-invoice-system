@@ -21,7 +21,7 @@
     <div class="breadcrumb-header justify-content-between">
         <div class="my-auto">
             <div class="d-flex">
-                <h4 class="content-title mb-0 my-auto"> <a href="/catalog/expenses&investment" class="content-title">النفقات و الاستثمارات</a>
+                <h4 class="content-title mb-0 my-auto"> <a href="/catalog/expenses_investment" class="content-title">النفقات و الاستثمارات</a>
                 </h4><span class="text-muted mt-1 tx-13 mr-2 mb-0">/ إضافة نفقه/استثمار</span>
             </div>
         </div>
@@ -56,7 +56,7 @@
         <div class="col-xl-12">
             <div class="card mg-b-20">
                 <div class="card-body">
-                    <form action="{{ route('expenses&investment.store') }}" method="post" enctype="multipart/form-data"
+                    <form action="{{ route('expenses_investment.store') }}" method="post" enctype="multipart/form-data"
                         autocomplete="off">
                         @csrf
                         {{-- 1 --}}

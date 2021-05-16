@@ -25,7 +25,7 @@ class ProductRequest extends FormRequest
     {
         return [
             'name' => 'required',
-            'reference_number' => 'required|numeric|unique:products,reference_number,' . $this->id,
+            'reference_number' => 'nullable|min:7|numeric|unique:products,reference_number,' . $this->id,
             'category_id' => 'required|numeric'
         ];
     }

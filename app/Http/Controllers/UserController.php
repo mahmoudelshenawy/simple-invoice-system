@@ -87,7 +87,8 @@ class UserController extends Controller
         ]);
 
         if ($request->super_admin == 'on') {
-            $user->hasRole('Administrator');
+            $user->syncRoles([1]);
+            // $user->hasRole('Administrator');
         }
 
         if ($request->role_id && count($request->role_id) > 0) {

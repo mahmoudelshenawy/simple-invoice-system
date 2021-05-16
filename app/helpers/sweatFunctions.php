@@ -1,5 +1,16 @@
 <?php
 
+function sku_generator($length)
+{
+    $result = '';
+
+    for ($i = 0; $i < $length; $i++) {
+        $result .= mt_rand(0, 9);
+    }
+
+    return $result;
+}
+
 function status_color($status)
 {
     switch ($status) {
@@ -18,7 +29,8 @@ function status_color($status)
         case 'In Progress':
             return 'badge badge-primary';
             break;
-
+        case 'Received':
+            return 'badge badge-success';
         default:
             # code...
             break;
